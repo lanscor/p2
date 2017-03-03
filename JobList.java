@@ -24,6 +24,9 @@ public class JobList implements ListADT<Job> {
 	private int size = 0;
 	protected Listnode<Job> head = null;
 	
+	/**
+	 * 
+	 */
 	public void add(Job item) throws IllegalArgumentException {   //Adds an item at the end of the list
 		if(item == null) {    //check the new item
 			throw new IllegalArgumentException();
@@ -43,6 +46,9 @@ public class JobList implements ListADT<Job> {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void add(int pos, Job item) throws IllegalArgumentException, IndexOutOfBoundsException{    //Add an item at any position in the list
 		if(item == null) {    //check the target item
@@ -63,6 +69,9 @@ public class JobList implements ListADT<Job> {
 		size++;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public boolean contains(Job item) throws IllegalArgumentException{    //Check if a particular item exists in the list
 		if(item == null) {    //check the target item
@@ -80,6 +89,9 @@ public class JobList implements ListADT<Job> {
 		return false;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Job get(int pos) throws IndexOutOfBoundsException {    //returns a Job at a certain position
 		if((pos > size() - 1) || (pos < 0)) {    //check the index
@@ -93,6 +105,9 @@ public class JobList implements ListADT<Job> {
 		return curr.getData();
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public boolean isEmpty() {
 		if(size() == 0) {
@@ -101,6 +116,9 @@ public class JobList implements ListADT<Job> {
 		return false;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Job remove(int pos) throws IndexOutOfBoundsException {    //removes a ListNode<Job> at a certain position and returns the Job in target node
 		if((pos > size() - 1) || (pos < 0)) {    //check the index
@@ -120,41 +138,21 @@ public class JobList implements ListADT<Job> {
 		return removed;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public int size() {    //returns the size of JobList
 		return size;
 	}
 
+	/**
+	 * 
+	 */
 	//@SuppressWarnings("unchecked")
 	@Override
 	public java.util.Iterator<Job> iterator() {    //required by java.util.Iterator, returns a iterator
 		return (java.util.Iterator<Job>) new JobListIterator(this);    
 	}
 
-	public static void main(String[] args) {    //test function
-		JobList j = new JobList();
-		System.out.println(j.isEmpty());
-		Job item = new Job("DailyScroop", 9, 3);
-		j.add(item);
-		System.out.println(j.isEmpty());
-		item = new Job("Setfire", 9, 5);
-		j.add(item);
-		item = new Job("GingerRoot", 9, 15);
-		j.add(item);
-	    Job item2 = new Job("UrbanSlice", 9, 10);
-	    item = new Job("HarvestGrains", 9, 6);
-	    j.add(1, item);
-	    JobListIterator ji = new JobListIterator(j);
-	    for(int i = 0;i < j.size(); i++) {
-	    	System.out.println(ji.next());
-	    }
-
-	    System.out.println(j.get(3));
-	    System.out.println(j.contains(item));
-	    System.out.println(j.get(2));
-	    System.out.println(j.remove(1));
-	    System.out.println(j.get(2));
-	    System.out.println(j.contains(item));
-	    
-	}
 }
