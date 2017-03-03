@@ -1,0 +1,81 @@
+/**
+ * File to test the functionality of all methods involving
+ * the JobList class and the JobListIterator class.
+ * @author Bryan and Zexing
+ *
+ */
+public class Test_JobList 
+{
+	/**
+	 * Main method containing all tests.
+	 * @param args
+	 */
+	public static void main(String[] args) 
+	{
+		// Test Constructor
+		JobList j = new JobList();
+		
+		// Test isEmpty method when empty
+		System.out.println(j.isEmpty());
+		System.out.println("Expected output: true");
+		
+		// Test add(item) method and size method
+		Job item1 = new Job("DailyScoop", 9, 3);
+		j.add(item1);
+		System.out.println(j.size());
+		System.out.println("Expected output: 1");
+		
+		// Test isEmpty method when not empty
+		System.out.println(j.isEmpty());
+		System.out.println("Expected output: false");
+		
+		// Test add(pos, item) method, get method and size method
+		Job item2 = new Job("Setfire", 9, 5);
+		j.add(0, item2);
+		Job item3 = new Job("GingerRoot", 9, 15);
+		j.add(1, item3);
+		System.out.println(j.get(0).getJobName());
+		System.out.println("Expected output: Setfire");
+		System.out.println(j.get(1).getJobName());
+		System.out.println("Expected output: GingerRoot");
+		System.out.println(j.size());
+		System.out.println("Expected output: 3");
+		
+		// Test contains(item) method
+		Job item4 = new Job("TheSett", 9, 10);
+		System.out.println(j.contains(item1));
+		System.out.println("Expected output: true");
+		System.out.println(j.contains(item2));
+		System.out.println("Expected output: true");
+		System.out.println(j.contains(item3));
+		System.out.println("Expected output: true");
+		System.out.println(j.contains(item4));
+		System.out.println("Expected output: false");
+		
+		// Test iterator constructor
+	    JobListIterator iterator = new JobListIterator(j);
+	    
+	    // Test iterator's next(), hasNext() methods
+	    System.out.println("\nExpected output:");
+	    for (int i = 0; i < j.size(); i++)
+	    {
+	    	System.out.println(j.get(i).getJobName());
+	    }
+	    System.out.println("\nActual output:");
+	    while (iterator.hasNext())
+	    {
+	    	System.out.println(iterator.next().getJobName());
+	    }
+	    
+	    // Test remove(int) method
+	    System.out.println("\nActual output:");
+	    while (!j.isEmpty())
+	    {
+	    	System.out.println(j.remove(0).getJobName());
+	    }
+	    System.out.println("\nExpected output:");
+	    System.out.println("Setfire");
+	    System.out.println("GingerRoot");
+	    System.out.println("DailyScoop");
+	}
+}
