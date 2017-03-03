@@ -5,6 +5,7 @@
 //
 // Authors: Zexing Li (Richard)
 // Author1: Zexing Li (Richard), zli674@wisc.edu, zexing, lec001
+// Author2: Bryan Watson, bmwatson2@wisc.edu, bmwatson2, lec001
 //
 // ---------------- OTHER ASSISTANCE CREDITS 
 // Persons: N/A
@@ -34,7 +35,7 @@ public class JobListIterator implements java.util.Iterator<Job> {    //Iterate t
 	 */
 	@Override
 	public boolean hasNext() {    //Checks if the Iterator has reached the end
-		if(curr.getNext() != null) {
+		if(curr != null) {
 			return true;
 		}
 		return false;
