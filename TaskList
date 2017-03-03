@@ -39,7 +39,7 @@ Task List Usage:
   to discuss how you can best complete this assignment.  Do you want 
   to work in smaller groups on specific tasks?
      
-- Task 1: Assign Code Letters for each Team Member
+o Task 1: Assign Code Letters for each Team Member
 
   Each team member is assigned a code letter.
   It can be the first letter of your name or any other unique letter.
@@ -57,7 +57,7 @@ Task List Usage:
               =
               =
               
-- Task 2: Define the JobList class so that it implements the ListADT
++zb Task 2: Define the JobList class so that it implements the ListADT
   as described in p0.  List sub-tasks here.
   
     +b Create an Eclipse project for p2
@@ -95,18 +95,18 @@ Task List Usage:
   +b test size() method
   +b test iterator() method
   
-+z Task 4: Write a JobListIterator class
++zb Task 4: Write a JobListIterator class
   Make sure that it is implemented as described in the assignment.
   +z add a constructor 
   +z hasNext()
   +z next()
   +b debugging
   
-- Task 5: Add a test to your Test_JobList class to test that the 
++b Task 5: Add a test to your Test_JobList class to test that the 
   JobList can return an iterator and that the JobListIterator
   works as expected.
   
-- Task 6: Write the Scoreboard class so that it implements all
+ob Task 6: Write the Scoreboard class so that it implements all
   required operations of the ScoreboardADT. Review the Game class
   to see how the Scoreboard class is being used.
   
