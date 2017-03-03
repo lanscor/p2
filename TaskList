@@ -79,26 +79,28 @@ Task List Usage:
        +z isEmpty()
        +z size()
        +z iterator()
+    +b Debugging
        
-ozb Task 3: Write a Test_JobList class 
++zb Task 3: Write a Test_JobList class 
   This can be written before Task 2 is finished.
   Just write test methods that will pass when JobList is finished
   +z add a main method
   +z add a test to create a JobList
   +z test add(item) method
   +z test add(pos,item) method
-  ob test remove(pos) method
-  ob test contains(item) method
-  ob test get(pos) method
-  ob test isEmpty() method
-  ob test size() method
-  ob test iterator() method
+  +b test remove(pos) method
+  +b test contains(item) method
+  +b test get(pos) method
+  +b test isEmpty() method
+  +b test size() method
+  +b test iterator() method
   
 +z Task 4: Write a JobListIterator class
   Make sure that it is implemented as described in the assignment.
   +z add a constructor 
   +z hasNext()
   +z next()
+  +b debugging
   
 - Task 5: Add a test to your Test_JobList class to test that the 
   JobList can return an iterator and that the JobListIterator
