@@ -1,3 +1,4 @@
+
 /////////////////////////////////////////////////////////////////////////////
 // Semester:         CS367 Spring 2016 
 // PROJECT:          JobMarket
@@ -5,6 +6,7 @@
 //
 // Authors: Zexing Li (Richard)
 // Author1: Zexing Li (Richard), zli674@wisc.edu, zexing, lec001
+// Author2: Bryan Watson, bmwatson2@wisc.edu, bmwatson2, lec001
 //
 // ---------------- OTHER ASSISTANCE CREDITS 
 // Persons: N/A
@@ -59,13 +61,19 @@ public class JobList implements ListADT<Job> {
 		}
 		
 		Listnode<Job> curr = head;    //traverse to the target position
-		for(int i = 0;i < pos - 1;i++) {
+		for(int i = 0;i < pos-1 ;i++) {
 			curr = curr.getNext();
 		}
-		
-		Listnode<Job> newmember = new Listnode<Job> (item, curr.getNext());    //create a new node and link the next node after the new node
-		
-		curr.setNext(newmember);    //link the prior node to the new node
+		if (pos == 0)
+		{
+			Listnode<Job> newmember = new Listnode<Job> (item, curr);
+			head = newmember;
+		}
+		else
+		{
+			Listnode<Job> newmember = new Listnode<Job> (item, curr.getNext());    //create a new node and link the next node after the new node
+			curr.setNext(newmember);    //link the prior node to the new node
+		}
 		size++;
 	}
 
@@ -124,16 +132,22 @@ public class JobList implements ListADT<Job> {
 		if((pos > size() - 1) || (pos < 0)) {    //check the index
 			throw new IndexOutOfBoundsException();
 		}
-		
+		Job removed;
 		Listnode<Job> curr = head;    //get the Job before the ListNode<Job> to be removed
-		for(int i = 0;i < pos - 1;i++) {
+		for(int i = 0;i < pos-1;i++) {
 			curr = curr.getNext();
 		}
-		
-		Job removed = curr.getNext().getData();    //Get the target Job from the JobList
-		
-		curr.setNext(curr.getNext().getNext());    //remove the target Job
-		
+		if (pos == 0)
+		{
+			removed = curr.getData();
+			head = curr.getNext();
+		}
+		else
+		{
+			removed = curr.getNext().getData();    //Get the target Job from the JobList
+			
+			curr.setNext(curr.getNext().getNext());    //remove the target Job
+		}
 		size--;    //reduce the size
 		return removed;
 	}
