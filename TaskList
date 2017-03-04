@@ -52,7 +52,7 @@ o Task 1: Assign Code Letters for each Team Member
             b = Bryan Watson
             z = Zexing Li
             m = Mason Gomm
-              =
+            j = Jonas Klare
               =
               =
               =
@@ -118,12 +118,12 @@ o Task 1: Assign Code Letters for each Team Member
   it may be much more convenient to write methods and call them 
   from the main method.
   
-- Task 9: Implement the GameApp class incrementally.  
++j Task 9: Implement the GameApp class incrementally.  
   Compile and run after each of these items
-  - main: get the command line arguments (use the getIntegerInput method)
-  - Add the Welcome message as output
-  - main: construct a Game instance with the command line values
-    - Try calling Game methods to see if Game was constructed
+  -j main: get the command line arguments (use the getIntegerInput method)
+  -j Add the Welcome message as output
+  -j main: construct a Game instance with the command line values
+    -j Try calling Game methods to see if Game was constructed
       and initialized correctly.
       
 - Task 10: Define a main_menu_loop() method: 
