@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class Game{
 
     /**
@@ -19,9 +21,11 @@ public class Game{
      * duration used to determine the length of the game.
      */
     public Game(int seed, int timeToPlay){
-        /**
-         * TODO: Initializes all member variables
-         */
+    	this.timeToPlay = timeToPlay;
+        seed = 0;
+        list = new JobList();
+        scoreBoard = new Scoreboard();
+        jobSimulator = new JobSimulator(seed);
     }
 
     /**
@@ -29,8 +33,7 @@ public class Game{
      * @returns the amount of time left in the game.
      */
     public int getTimeToPlay() {
-        //TODO: return the amount of time left
-        return 0;
+        return timeToPlay;
     }
 
     /**
@@ -40,7 +43,7 @@ public class Game{
      *        the remaining duration of the game
      */
     public void setTimeToPlay(int timeToPlay) {
-        //TODO: Setter for amount of time to play
+        this.timeToPlay = timeToPlay;
     }
 
     /**
@@ -50,24 +53,27 @@ public class Game{
      * else returns false
      */
     public boolean isOver(){
-        //TODO: check if the game is over or not
-        return false;
+        if (timeToPlay <= 0) {
+        	return true;
+        }
+        else {
+        	return false;
+        }
     }
     /**
      * This method simply invokes the simulateJobs method
      * in the JobSimulator object.
      */
     public void createJobs(){
-        //TODO: Invoke the simulator to create jobs
-
+    	jobSimulator.simulateJobs(list, timeToPlay);
     }
 
     /**
      * @returns the length of the Joblist.
      */
     public int getNumberOfJobs(){
-        //TODO: Get the number of jobs in the JobList
-        return 0;
+        int numOfJobs = list.size();
+        return numOfJobs;
     }
 
     /**
@@ -81,10 +87,13 @@ public class Game{
      *      The job to be inserted in the list.
      */
     public void addJob(int pos, Job item){
-        /**
-         * TODO: Add a job in the list
-         * based on position
-         */
+        list.add(pos, item);
+        if (timeToPlay < item.getTimeUnits()) {
+        	timeToPlay = 0;
+        }
+        else {
+        	timeToPlay -= pos;
+        }
     }
 
     /**
@@ -93,7 +102,7 @@ public class Game{
      *      The job to be inserted in the list.
      */
     public void addJob(Job item){
-        //TODO: Add a job in the joblist
+        list.add(item);
     }
 
     /**
@@ -117,8 +126,28 @@ public class Game{
      *      The amount of time the given job is to be worked on for.
      */
     public Job updateJob(int index, int duration){
-        //TODO: As per instructions in comments
-        return null;
+        if (index <= 0 || index > list.size() - 1) {
+        	throw new IndexOutOfBoundsException();
+        }
+        
+        if (duration > timeToPlay) {
+        	duration = timeToPlay;
+        }
+        
+        Job tmp = list.remove(index);
+        timeToPlay -= duration;
+        if (duration > tmp.getTimeUnits() - tmp.getSteps()) {
+        	duration = tmp.getTimeUnits() - tmp.getSteps();
+        }
+        tmp.setSteps(tmp.getSteps() + duration);
+        
+        if(tmp.isCompleted()) {
+        	scoreBoard.updateScoreBoard(tmp);
+        	return tmp;
+        }
+        else {
+        	return tmp;
+        }
     }
 
     /**
@@ -130,16 +159,19 @@ public class Game{
      *
      */
     public void displayActiveJobs(){
-        //TODO: Display all the active jobs
-
+        Iterator<Job> itr = list.iterator();
+        int count = 0;
+        while (itr.hasNext()) {
+        	System.out.println("At position: " + count + " " + itr.next().toString());
+        	count++;
+        }
     }
 
     /**
      * This function simply invokes the displayScoreBoard method in the ScoreBoard class.
      */
     public void displayCompletedJobs(){
-        //TODO: Display all the completed jobs
-
+        scoreBoard.displayScoreBoard();
     }
 
     /**
@@ -147,7 +179,6 @@ public class Game{
      * @return the value calculated by getTotalScore
      */
     public int getTotalScore(){
-        //TODO: Return the total score accumulated
-        return 0;
+        return scoreBoard.getTotalScore();
     }
 }
