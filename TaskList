@@ -51,7 +51,7 @@ o Task 1: Assign Code Letters for each Team Member
   ---------------------------
             b = Bryan Watson
             z = Zexing Li
-              =
+            m = Mason Gomm
               =
               =
               =
@@ -106,11 +106,11 @@ o Task 1: Assign Code Letters for each Team Member
   JobList can return an iterator and that the JobListIterator
   works as expected.
   
-ob Task 6: Write the Scoreboard class so that it implements all
++b Task 6: Write the Scoreboard class so that it implements all
   required operations of the ScoreboardADT. Review the Game class
   to see how the Scoreboard class is being used.
   
-- Task 7: Complete the Game class implementation by completing the
++m Task 7: Complete the Game class implementation by completing the
   TODO tags.
   
 - Task 8: Re-read the assignment and map out the actions that must
