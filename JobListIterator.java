@@ -14,27 +14,27 @@
 //////////////////////////// 80 columns wide //////////////////////////////////
 
 /**
- * 
+ * Iterate through JobList
  * @author Zexing
  *
  */
-public class JobListIterator implements java.util.Iterator<Job> {    //Iterate through JobList
+public class JobListIterator implements java.util.Iterator<Job> {   
 	
 	Listnode<Job> curr = null;
 	
 	/**
-	 * 
+	 * Creates and returns a new Iterator
 	 * @param joblist
 	 */
-	public JobListIterator (JobList joblist) {    //Creates and returns a new Iterator
-		curr = joblist.head;
+	public JobListIterator (Listnode<Job> head) {    
+		curr = head.getNext();
 	}
 	
 	/**
-	 * 
+	 * Checks if the Iterator has reached the end
 	 */
 	@Override
-	public boolean hasNext() {    //Checks if the Iterator has reached the end
+	public boolean hasNext() {    
 		if(curr != null) {
 			return true;
 		}
@@ -42,10 +42,10 @@ public class JobListIterator implements java.util.Iterator<Job> {    //Iterate t
 	}
 	
 	/**
-	 * 
+	 * Gets the current Job and go on to the nest node
 	 */
 	@Override
-	public Job next() {    //Gets the current Job and go on to the nest node
+	public Job next() {   
 		if(curr != null) {
 			Job curjob = curr.getData();
 			curr = curr.getNext();
