@@ -187,6 +187,7 @@ public class Game{
         	System.out.println("At position: " + count + " " + itr.next().toString());
         	count++;
         }
+        System.out.println();
     }
 
     /**
