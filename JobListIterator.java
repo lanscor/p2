@@ -1,82 +1,59 @@
-import java.util.Iterator;
+/////////////////////////////////////////////////////////////////////////////
+// Semester:         CS367 Spring 2016 
+// PROJECT:          JobMarket
+// FILE:             JobList
+//
+// Authors: Zexing Li (Richard)
+// Author1: Zexing Li (Richard), zli674@wisc.edu, zexing, lec001
+// Author2: Bryan Watson, bmwatson2@wisc.edu, bmwatson2, lec001
+//
+// ---------------- OTHER ASSISTANCE CREDITS 
+// Persons: N/A
+// 
+// Online sources: N/A
+//////////////////////////// 80 columns wide //////////////////////////////////
+
 /**
- * File to test the functionality of all methods involving
- * the JobList class and the JobListIterator class.
- * @author Bryan and Zexing
+ * Iterate through JobList
+ * @author Zexing
  *
  */
-public class Test_JobList 
-{
+public class JobListIterator implements java.util.Iterator<Job> {   
+	
+	Listnode<Job> curr = null;
+	
 	/**
-	 * Main method containing all tests.
-	 * @param args
+	 * Creates and returns a new Iterator
+	 * @param joblist
 	 */
-	public static void main(String[] args) 
-	{
-		// Test Constructor
-		JobList j = new JobList();
-		
-		// Test isEmpty method when empty
-		System.out.println(j.isEmpty());
-		System.out.println("Expected output: true");
-		
-		// Test add(item) method and size method
-		Job item1 = new Job("DailyScoop", 9, 3);
-		j.add(item1);
-		System.out.println(j.size());
-		System.out.println("Expected output: 1");
-		
-		// Test isEmpty method when not empty
-		System.out.println(j.isEmpty());
-		System.out.println("Expected output: false");
-		
-		// Test add(pos, item) method, get method and size method
-		Job item2 = new Job("Setfire", 9, 5);
-		j.add(1, item2);
-		Job item3 = new Job("GingerRoot", 9, 15);
-		j.add(2, item3);
-		System.out.println(j.get(1).getJobName());
-		System.out.println("Expected output: Setfire");
-		System.out.println(j.get(2).getJobName());
-		System.out.println("Expected output: GingerRoot");
-		System.out.println(j.size());
-		System.out.println("Expected output: 3");
-		
-		// Test contains(item) method
-		Job item4 = new Job("TheSett", 9, 10);
-		System.out.println(j.contains(item1));
-		System.out.println("Expected output: true");
-		System.out.println(j.contains(item2));
-		System.out.println("Expected output: true");
-		System.out.println(j.contains(item3));
-		System.out.println("Expected output: true");
-		System.out.println(j.contains(item4));
-		System.out.println("Expected output: false");
-		
-		// Test iterator constructor
-	     Iterator<Job> iterator = j.iterator();
-	    
-	    // Test iterator's next(), hasNext() methods
-	    System.out.println("\nExpected output:");
-	    for (int i = 1; i < j.size() + 1; i++)
-	    {
-	    	System.out.println(j.get(i).getJobName());
-	    }
-	    System.out.println("\nActual output:");
-	    while (iterator.hasNext())
-	    {
-	    	System.out.println(iterator.next().getJobName());
-	    }
-	    
-	    // Test remove(int) method
-	    System.out.println("\nActual output:");
-	    while (!j.isEmpty())
-	    {
-	    	System.out.println(j.remove(1).getJobName());
-	    }
-	    System.out.println("\nExpected output:");
-	    System.out.println("Setfire");
-	    System.out.println("GingerRoot");
-	    System.out.println("DailyScoop");
+	public JobListIterator (Listnode<Job> head) {    
+		curr = head.getNext();
 	}
+	
+	/**
+	 * Checks if the Iterator has reached the end
+	 */
+	@Override
+	public boolean hasNext() {    
+		if(curr != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Gets the current Job and go on to the nest node
+	 */
+	@Override
+	public Job next() {   
+		if(curr != null) {
+			Job curjob = curr.getData();
+			curr = curr.getNext();
+			return curjob;
+		}
+		else {
+			throw new java.util.NoSuchElementException();
+		}
+	}
+	
 }
