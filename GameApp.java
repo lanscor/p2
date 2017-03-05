@@ -29,6 +29,7 @@ public class GameApp{
      * Scanner instance for reading input from console
      */
     private static final Scanner STDIN = new Scanner(System.in);
+    private Game game;
 
     /**
      * Constructor for instantiating game class
@@ -36,7 +37,7 @@ public class GameApp{
      * @param timeToPlay: Total time to play from command line
      */
     public GameApp(int seed, int timeToPlay){
-    	Game game = new Game(seed, timeToPlay);
+    	game = new Game(seed, timeToPlay);
     }
 
     /**
@@ -47,9 +48,8 @@ public class GameApp{
      *
      * @param args: Command line arguments <seed> <timeToPlay>
      */
-    public static void main(String[] args) {
- 
-    	//System.exit(0);
+    public static void main(String[] args) 
+    {
     	//Variables
     	int 
     		seed, 
@@ -79,15 +79,58 @@ public class GameApp{
          
         //Create the new object. 
         GameApp app = new GameApp(seed, timeToPlay);
-        app.start();
+        while(app.game.getTimeToPlay() > 0)
+        {
+        	app.start();
+       	}
         //Body
     }
 
     /**
      * Add Comments as per implementation
      */
-    private void start(){
-        //TODO: The interactive game logic goes here
+    private void start()
+    {	
+    	//Variables
+    	int
+    		jobIndex, //the index of the job wanted to be worked on.
+    		jobTime; //The amount of time for the given job. 
+    	final String
+    		indexPrompt = "Select a job to work on: ",
+    		timePrompt = "For how long would you like to work on this job?: ";
+    	//Variables
+    	
+    	//Body
+    	//Create new jobs on first iteration, or if successful reinsert. 
+    	this.game.createJobs();
+    	
+    	//Display jobs w/Game Object. 
+    	this.game.displayActiveJobs();
+    	
+    	//Ask for user input of what job they want to perform
+    	jobIndex = getIntegerInput(indexPrompt);
+    		//Deduct time if not at index 0. 
+    	//Get the total time, then subtract index and set as time. (DELETE)
+    	
+    	//Ask for user input of how long they want to work that job
+    	jobTime = getIntegerInput(timePrompt);
+    	
+    	//Get job and attempt to work for that long (w/ error checking)
+    	
+    	//Update job for the specified time
+    	
+    	//If job isn't completed...
+    		//Ask for new index
+    		//Deduct points based on how far from index 0. 
+    		//Deduct the time penalty accrued. 
+    		//Insert at specified index. 
+    	
+    	//If the job is completed...
+    		//Display success message
+    	
+    	
+    	//AT END OF GAME display final message with score. 
+    	//Body
     }
 
     /**
