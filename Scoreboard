@@ -1,1 +1,115 @@
+/////////////////////////////////////////////////////////////////////////////
+// Semester:         CS367 Spring 2016 
+// PROJECT:          GameApp
+// FILE:             Scoreboard.java
+//
+// TEAM:    The Brogrammers, 07
+// Authors: Jonas Klare
+// Author1: Jonas Klare, klare@wisc.edu, klare, 001
+//
+// ---------------- OTHER ASSISTANCE CREDITS 
+// Persons: N/a
+// 
+// Online sources: N/a
+//////////////////////////// 80 columns wide //////////////////////////////////
+/**
+ * Keeps track of the all of the jobs that have been completed, and also keeps
+ * track of the point values for each of those. 
+ *
+ * <p>Bugs: None found so far. 
+ *
+ * @author Jonas
+ */
 
+import java.util.Iterator;
+
+public class Scoreboard implements ScoreboardADT
+{
+	//Variables
+	private ListADT<Job> scores = new JobList(); //Contains completed jobs.
+	private int totalScore; //Keeps track of the scores from all of the jobs combined. 
+	//Variables
+	
+	//Constructor
+	/**
+	 * Base constructor, just sets score to 0. 
+	 */
+	public Scoreboard()
+	{
+		totalScore = 0; 
+	}
+	//Constructor
+	
+	//Getters
+	/**
+	 * Getter for the total score. 
+	 */
+	public int getTotalScore() 
+	{
+		return totalScore;
+	}
+	//Getters
+
+	//Methods
+	/**
+	 * Purpose: This function creates the list that scoreboard holds, and keeps track of the
+	 * points that the player has earned. 
+	 * 
+	 * PRECONDITIONS:
+	 * 		A job that is considered completed is given to the program.  
+	 * 		It will test to make sure the job is completed, however. 
+	 * POSTCONDTIONS:
+	 * 		The scoreboard is now updated with the job, giving data, and the score. 
+	 * 
+	 * @param job: the job that has just been completed and is now going to be added
+	 * 		to the score board.
+	 */
+	public void updateScoreBoard(Job job) 
+	{
+		if(job.isCompleted() == true) //Check to see if job is done. 
+		{
+			scores.add(job); //Add at the end of the list.
+			totalScore +=  job.getPoints(); //Add to the points list.  
+		}
+	}
+
+	/**
+	 * Purpose: Display the scoreboards data. 
+	 * 
+	 * PRECONDITIONS:
+	 * 		There are no pre conditions for this method. 
+	 * POSTCONDITIONS: 
+	 * 		Data has not been altered, only shown. 
+	 * Format example:
+	 * The jobs completed: 
+	 *	Job Name: J0
+	 *	Points earned for this job: 1462
+	 *	--------------------------------------------
+	 *	Job Name: J5
+	 *	Points earned for this job: 15
+	 *	--------------------------------------------
+	 */
+	public void displayScoreBoard() 
+	{
+		//Variables
+		Job curr;
+		//Variables
+		
+		//Body
+		System.out.println("The jobs completed:");
+		Iterator<Job> it = scores.iterator();
+		while(it.hasNext())
+		{
+			//Get the next object in the list. 
+			curr = it.next();
+			
+			//Print out the job name, then the points earned for this job
+			System.out.println("Job Name: " + curr.getJobName());
+			System.out.println("Points earned for this job: " + curr.getPoints());
+			System.out.println("--------------------------------------------");
+		}
+		//Body
+	}
+	//Methods
+
+}
