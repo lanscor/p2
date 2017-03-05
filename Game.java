@@ -1,3 +1,17 @@
+/////////////////////////////////////////////////////////////////////////////
+// Semester:         CS367 Spring 2016 
+// PROJECT:          GameApp
+// FILE:             Game.java
+//
+// TEAM:    The Brogrammers, 07
+// Authors: 
+// Author1: 
+//
+// ---------------- OTHER ASSISTANCE CREDITS 
+// Persons: N/a
+// 
+// Online sources: N/a
+//////////////////////////// 80 columns wide //////////////////////////////////
 import java.util.Iterator;
 
 public class Game{
@@ -22,10 +36,9 @@ public class Game{
      */
     public Game(int seed, int timeToPlay){
     	this.timeToPlay = timeToPlay;
-        seed = 0;
-        list = new JobList();
-        scoreBoard = new Scoreboard();
-        jobSimulator = new JobSimulator(seed);
+        this.scoreBoard = new Scoreboard();
+        this.jobSimulator = new JobSimulator(seed);
+        this.list = new JobList();
     }
 
     /**
@@ -33,7 +46,7 @@ public class Game{
      * @returns the amount of time left in the game.
      */
     public int getTimeToPlay() {
-        return timeToPlay;
+        return this.timeToPlay;
     }
 
     /**
@@ -53,7 +66,7 @@ public class Game{
      * else returns false
      */
     public boolean isOver(){
-        if (timeToPlay <= 0) {
+        if (this.timeToPlay <= 0) {
         	return true;
         }
         else {
@@ -65,14 +78,14 @@ public class Game{
      * in the JobSimulator object.
      */
     public void createJobs(){
-    	jobSimulator.simulateJobs(list, timeToPlay);
+    	this.jobSimulator.simulateJobs(this.list, this.timeToPlay);
     }
 
     /**
      * @returns the length of the Joblist.
      */
     public int getNumberOfJobs(){
-        int numOfJobs = list.size();
+        int numOfJobs = this.list.size();
         return numOfJobs;
     }
 
@@ -87,12 +100,20 @@ public class Game{
      *      The job to be inserted in the list.
      */
     public void addJob(int pos, Job item){
-        list.add(pos, item);
-        if (timeToPlay < item.getTimeUnits()) {
-        	timeToPlay = 0;
+        if (this.timeToPlay < item.getTimeUnits()) {
+        	this.timeToPlay = 0;
         }
-        else {
-        	timeToPlay -= pos;
+        else if (pos < 0 || pos >= this.list.size())
+        {
+        	this.list.add(item);
+        	this.timeToPlay -= this.getNumberOfJobs();
+        	this.createJobs();
+        }
+        else
+        {
+        	this.list.add(pos + 1, item);
+        	this.timeToPlay -= pos;
+        	this.createJobs();
         }
     }
 
@@ -102,7 +123,7 @@ public class Game{
      *      The job to be inserted in the list.
      */
     public void addJob(Job item){
-        list.add(item);
+        this.list.add(item);
     }
 
     /**
@@ -126,23 +147,23 @@ public class Game{
      *      The amount of time the given job is to be worked on for.
      */
     public Job updateJob(int index, int duration){
-        if (index <= 0 || index > list.size() - 1) {
+        if (index < 0 || index > this.list.size()) {
         	throw new IndexOutOfBoundsException();
         }
         
-        if (duration > timeToPlay) {
-        	duration = timeToPlay;
+        if (duration > this.timeToPlay) {
+        	duration = this.timeToPlay;
         }
         
-        Job tmp = list.remove(index);
-        timeToPlay -= duration;
+        Job tmp = this.list.remove(index + 1);
         if (duration > tmp.getTimeUnits() - tmp.getSteps()) {
         	duration = tmp.getTimeUnits() - tmp.getSteps();
         }
         tmp.setSteps(tmp.getSteps() + duration);
-        
+        this.timeToPlay -= duration;
         if(tmp.isCompleted()) {
-        	scoreBoard.updateScoreBoard(tmp);
+        	this.scoreBoard.updateScoreBoard(tmp);
+        	this.createJobs();
         	return tmp;
         }
         else {
@@ -159,8 +180,9 @@ public class Game{
      *
      */
     public void displayActiveJobs(){
-        Iterator<Job> itr = list.iterator();
+        Iterator<Job> itr = this.list.iterator();
         int count = 0;
+        System.out.println("Job Listing");
         while (itr.hasNext()) {
         	System.out.println("At position: " + count + " " + itr.next().toString());
         	count++;
@@ -171,7 +193,7 @@ public class Game{
      * This function simply invokes the displayScoreBoard method in the ScoreBoard class.
      */
     public void displayCompletedJobs(){
-        scoreBoard.displayScoreBoard();
+        this.scoreBoard.displayScoreBoard();
     }
 
     /**
@@ -179,6 +201,6 @@ public class Game{
      * @return the value calculated by getTotalScore
      */
     public int getTotalScore(){
-        return scoreBoard.getTotalScore();
+        return this.scoreBoard.getTotalScore();
     }
 }
