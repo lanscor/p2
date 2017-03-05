@@ -3,7 +3,7 @@
 // PROJECT:          JobMarket
 // FILE:             JobList
 //
-// Authors: Zexing Li (Richard)
+// Authors: Zexing Li (Richard), Bryan Watson
 // Author1: Zexing Li (Richard), zli674@wisc.edu, zexing, lec001
 // Author2: Bryan Watson, bmwatson2@wisc.edu, bmwatson2, lec001
 //
