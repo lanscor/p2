@@ -175,7 +175,6 @@ public class GameApp{
     	catch (Exception e)
     	{
     		System.out.println("ERROR: Invalid input. Try again.");
-    		return;
     	}
     }
 
