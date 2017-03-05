@@ -96,6 +96,7 @@ public class Scoreboard implements ScoreboardADT
 		//Variables
 		
 		//Body
+		System.out.println("Total Score: " + this.totalScore);
 		System.out.println("The jobs completed:");
 		Iterator<Job> it = scores.iterator();
 		while(it.hasNext())
