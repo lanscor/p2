@@ -4,8 +4,9 @@
 // FILE:             Scoreboard.java
 //
 // TEAM:    The Brogrammers, 07
-// Authors: Jonas Klare
+// Authors: Jonas Klare, Bryan Watson
 // Author1: Jonas Klare, klare@wisc.edu, klare, 001
+// Author2: Bryan Watson, bmwatson2@wisc.edu, bmwatson2, 001
 //
 // ---------------- OTHER ASSISTANCE CREDITS 
 // Persons: N/a
@@ -18,7 +19,6 @@
  *
  * <p>Bugs: None found so far. 
  *
- * @author Jonas
  */
 
 
@@ -30,6 +30,7 @@ public class GameApp{
      */
     private static final Scanner STDIN = new Scanner(System.in);
     private Game game;
+    private boolean firstPass;
 
     /**
      * Constructor for instantiating game class
@@ -37,7 +38,8 @@ public class GameApp{
      * @param timeToPlay: Total time to play from command line
      */
     public GameApp(int seed, int timeToPlay){
-    	game = new Game(seed, timeToPlay);
+    	this.game = new Game(seed, timeToPlay);
+    	this.firstPass = true;
     }
 
     /**
@@ -55,27 +57,28 @@ public class GameApp{
     		seed, 
     		timeToPlay;
     	String 
-    		commandLine, 
     		upSeed,       //Unparsed versions of their int form
     		upTimeToPlay; //Unparsed versions of their int form. 
     	String[]
-    		split;
+    		split = new String[args.length];
     	//Variables
     	
     	//Body
         System.out.println("Welcome to the Job Market!");
 
         //Get commandLine arguments. 
-        commandLine = args[0]; //First line of args. 
-        split = commandLine.split(" "); //Split at each space. 
+        for (int i = 0; i < args.length; i++)
+        {
+        	split[i] = (String) args[i]; //First line of args. 
+        }
         
         //The first is the seed, the second is the time to play. 
         upSeed = split[0];
         upTimeToPlay = split[1];
         
         //Check to see if they are both good. 
-        seed = check(upSeed);
-        timeToPlay = check(upTimeToPlay);
+        seed = checkArgs(upSeed);
+        timeToPlay = checkArgs(upTimeToPlay);
          
         //Create the new object. 
         GameApp app = new GameApp(seed, timeToPlay);
@@ -97,39 +100,79 @@ public class GameApp{
     		jobTime; //The amount of time for the given job. 
     	final String
     		indexPrompt = "Select a job to work on: ",
-    		timePrompt = "For how long would you like to work on this job?: ";
+    		timePrompt = "For how long would you like to work on this job?: ",
+    		reentryPrompt = "At what position would you like to insert the "
+    				+ "job back into the list?";
     	//Variables
     	
     	//Body
-    	//Create new jobs on first iteration, or if successful reinsert. 
-    	this.game.createJobs();
+    	// Display time remaining in game
+    	int timeToPlay = this.game.getTimeToPlay();
+    	System.out.println("You have " + timeToPlay + " left in the game!");
+    	
+    	//Create new jobs on first iteration
+    	if (firstPass)
+    	{
+    		this.game.createJobs();
+    		firstPass = false;
+    	}
     	
     	//Display jobs w/Game Object. 
     	this.game.displayActiveJobs();
     	
     	//Ask for user input of what job they want to perform
     	jobIndex = getIntegerInput(indexPrompt);
+    	
     		//Deduct time if not at index 0. 
-    	//Get the total time, then subtract index and set as time. (DELETE)
+    		if (jobIndex != 0)
+    		{
+    			int deducted = timeToPlay - jobIndex;
+    			this.game.setTimeToPlay(deducted);
+    		}
     	
     	//Ask for user input of how long they want to work that job
     	jobTime = getIntegerInput(timePrompt);
     	
     	//Get job and attempt to work for that long (w/ error checking)
-    	
-    	//Update job for the specified time
+    	Job currJob = this.game.updateJob(jobIndex, jobTime);
     	
     	//If job isn't completed...
+    	if (!currJob.isCompleted())
+    	{
     		//Ask for new index
-    		//Deduct points based on how far from index 0. 
-    		//Deduct the time penalty accrued. 
+    		jobIndex = checkIndex(reentryPrompt);
+    		//Determine and deduct the time penalty accrued.
+    		int timePenalty;
+    		if (jobIndex == -1 || jobIndex > this.game.getNumberOfJobs() - 1)
+    		{
+    			timePenalty = this.game.getNumberOfJobs();
+    		}
+    		else
+    		{
+    			timePenalty = jobIndex;
+    		}
+    		this.game.setTimeToPlay(this.game.getTimeToPlay() - timePenalty);
+    		
     		//Insert at specified index. 
+    		this.game.addJob(jobIndex, currJob);
+    	}
+    	
     	
     	//If the job is completed...
+    	else
+    	{
     		//Display success message
-    	
-    	
+    		System.out.println("Job completed! Current Score: " + 
+    				this.game.getTotalScore());
+    		this.game.displayCompletedJobs();
+    	}
     	//AT END OF GAME display final message with score. 
+    	if (this.game.getTimeToPlay() <= 0)
+    	{
+    		System.out.println("Game Over!");
+    		System.out.println("Your final score: " + 
+    				this.game.getTotalScore());
+    	}
     	//Body
     }
 
@@ -158,7 +201,7 @@ public class GameApp{
      * @param prompt: incoming string to be parsed. 
      * @return a parsed, correctly formatted string. 
      */
-    public static int check(String prompt) 
+    public static int checkArgs(String prompt) 
     {
     	//Variables
     	int out = -1; 
@@ -186,4 +229,43 @@ public class GameApp{
     	return out;
     }
     
+    /**
+     * Check to see if the incoming prompt is a correctly formatted integer
+     * for reentry into 
+     * ie It's positive, and can be parsed. 
+     * It exits if the number isn't positive. 
+     * 
+     * @param prompt: incoming string to be parsed. 
+     * @return a parsed, correctly formatted string. 
+     */
+    public static int checkIndex(String prompt) 
+    {
+    	//Variables
+    	String out; 
+    	int output;
+    	//Variables
+    	
+    	//Body
+    	try
+    	{
+    		System.out.println(prompt);
+    		out = STDIN.next();
+    		//Check to see if it is an integer. 
+    		output = Integer.parseInt(out);
+    		
+    		//See if it is positive. 
+    		if(output < 0) //If negative
+    		{
+    			return -1;
+    		}
+    	}
+    	catch(NumberFormatException e)
+    	{
+    		return -1;
+    	}
+    	//Body
+    	
+    	//Return
+    	return output;
+    } 
 }
