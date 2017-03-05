@@ -146,8 +146,9 @@ public class Game{
      * @param duration
      *      The amount of time the given job is to be worked on for.
      */
-    public Job updateJob(int index, int duration){
-        if (index < 0 || index > this.list.size()) {
+    public Job updateJob(int index, int duration) 
+    		throws IndexOutOfBoundsException{
+        if (index < 0 || index > this.list.size() || duration < 0) {
         	throw new IndexOutOfBoundsException();
         }
         
