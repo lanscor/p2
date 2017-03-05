@@ -53,7 +53,7 @@ o Task 1: Assign Code Letters for each Team Member
             z = Zexing Li
             m = Mason Gomm
             j = Jonas Klare
-              =
+            c = Changhao Sun
               =
               =
               
@@ -113,7 +113,7 @@ o Task 1: Assign Code Letters for each Team Member
 +m Task 7: Complete the Game class implementation by completing the
   TODO tags.
   
-- Task 8: Re-read the assignment and map out the actions that must
++c Task 8: Re-read the assignment and map out the actions that must
   happen in the GameApp (main) class.  There is much to do here and
   it may be much more convenient to write methods and call them 
   from the main method.
