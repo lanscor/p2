@@ -113,10 +113,11 @@ o Task 1: Assign Code Letters for each Team Member
 +m Task 7: Complete the Game class implementation by completing the
   TODO tags.
   
-- Task 8: Re-read the assignment and map out the actions that must
++j Task 8: Re-read the assignment and map out the actions that must
   happen in the GameApp (main) class.  There is much to do here and
   it may be much more convenient to write methods and call them 
   from the main method.
+  (WORKED ON BY J A SECOND PERSON TO LOOK AT THIS WOULD BE NICE)
   
 +j Task 9: Implement the GameApp class incrementally.  
   Compile and run after each of these items
