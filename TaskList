@@ -126,12 +126,14 @@ o Task 1: Assign Code Letters for each Team Member
     -j Try calling Game methods to see if Game was constructed
       and initialized correctly.
       
-- Task 10: Define a main_menu_loop() method: 
+ob Task 10: Define a main_menu_loop() method: 
   Put code for one iteration of game play
   - Get the outputs to display in the right order
   - Add a call to this method from the main method
   - Get input value and echo to screen
   - output the job list
+  
+- Task 11: Overall Debugging, Output Testing
 
 - ADD MORE SUB-TASKS TO ANY OF THE ABOVE TASKS
 
