@@ -23,27 +23,34 @@
 
 public class JobList implements ListADT<Job> {
 	private int size = 0;
-	protected Listnode<Job> head = null;
+	private Listnode<Job> head;
+	
+	public JobList() {
+		this.head = new Listnode<Job>(null);
+	}
 	
 	/**
-	 * 
+	 * Adds an item at the end of the list
 	 */
-	public void add(Job item) throws IllegalArgumentException {   //Adds an item at the end of the list
-		if(item == null) {    //check the new item
+	public void add(Job item) throws IllegalArgumentException {   
+		//check the new item
+		if(item == null) {    
 			throw new IllegalArgumentException();
 		}
-		if(head == null) {    //create the List if no list
-			head = new Listnode<Job>(item);
-			size++;
-		}
-		else {    //add a new node
-			Listnode<Job> newmember = new Listnode<Job>(item);    //create a new node
-			Listnode<Job> curr = head;    //traverse to the prior node
+		//add a new node
+		else {    
+			//create a new node
+			Listnode<Job> newmember = new Listnode<Job>(item); 
+			
+			//traverse to the prior node
+			Listnode<Job> curr = this.head;    
 			while(curr.getNext() != null) {
 				curr = curr.getNext();
 			}
 			curr.setNext(newmember);
-			size++;    //increase the size
+			
+			 //increase the size
+			this.size++;   
 		}
 	}
 
@@ -51,42 +58,44 @@ public class JobList implements ListADT<Job> {
 	 * 
 	 */
 	@Override
-	public void add(int pos, Job item) throws IllegalArgumentException, IndexOutOfBoundsException{    //Add an item at any position in the list
-		if(item == null) {    //check the target item
+	public void add(int pos, Job item) throws IllegalArgumentException, 
+		IndexOutOfBoundsException{ 
+		
+		//Add an item at any position in the list, check the target item
+		if(item == null) {    
 			throw new IllegalArgumentException();
 		}
-		if((pos > size() - 1) || (pos < 0)) {    //check the position
+		//check the position
+		if((pos > size()) || (pos < 1)) {    
 			throw new IndexOutOfBoundsException();
 		}
-		
-		Listnode<Job> curr = head;    //traverse to the target position
+		//traverse to the target position
+		Listnode<Job> curr = this.head;   
 		for(int i = 0;i < pos-1 ;i++) {
 			curr = curr.getNext();
 		}
-		if (pos == 0)
-		{
-			Listnode<Job> newmember = new Listnode<Job> (item, curr);
-			head = newmember;
-		}
-		else
-		{
-			Listnode<Job> newmember = new Listnode<Job> (item, curr.getNext());    //create a new node and link the next node after the new node
-			curr.setNext(newmember);    //link the prior node to the new node
-		}
-		size++;
+		//create a new node and link the next node after the new node
+		Listnode<Job> newmember = new Listnode<Job> (item, curr.getNext());
+		
+		//link the prior node to the new node
+		curr.setNext(newmember);    
+		this.size++;
 	}
 
 	/**
-	 * 
+	 * Check if a particular item exists in the list
 	 */
 	@Override
-	public boolean contains(Job item) throws IllegalArgumentException{    //Check if a particular item exists in the list
-		if(item == null) {    //check the target item
+	public boolean contains(Job item) throws IllegalArgumentException{
+		//check the target item
+		if(item == null) {    
 			throw new IllegalArgumentException();
 		}
 		
-		Listnode<Job> curr = head;
-		while(curr != null) {    //traverse through the JobList
+		Listnode<Job> curr = this.head;
+		
+		//traverse through the JobList
+		while(curr != null) {    
 			if(curr.getData() == item) {
 				return true;
 			}
@@ -97,15 +106,16 @@ public class JobList implements ListADT<Job> {
 	}
 
 	/**
-	 * 
+	 * returns a Job at a certain position
 	 */
 	@Override
-	public Job get(int pos) throws IndexOutOfBoundsException {    //returns a Job at a certain position
-		if((pos > size() - 1) || (pos < 0)) {    //check the index
+	public Job get(int pos) throws IndexOutOfBoundsException { 
+		//check the index
+		if((pos > size()) || (pos < 0)) {    
 			throw new IndexOutOfBoundsException();
 		}
-		
-		Listnode<Job> curr = head;    //traverse to the target position
+		//traverse to the target position
+		Listnode<Job> curr = this.head;    
 		for(int i = 0;i < pos;i++) {
 			curr = curr.getNext();
 		}
@@ -124,48 +134,46 @@ public class JobList implements ListADT<Job> {
 	}
 
 	/**
-	 * 
+	 * removes a ListNode<Job> at a certain position and returns the 
+	 * Job in target node
 	 */
 	@Override
-	public Job remove(int pos) throws IndexOutOfBoundsException {    //removes a ListNode<Job> at a certain position and returns the Job in target node
-		if((pos > size() - 1) || (pos < 0)) {    //check the index
+	public Job remove(int pos) throws IndexOutOfBoundsException {    
+		//check the index
+		if((pos > size()) || (pos < 1)) {    
 			throw new IndexOutOfBoundsException();
 		}
-		Job removed;
-		Listnode<Job> curr = head;    //get the Job before the ListNode<Job> to be removed
+		//get the Job before the ListNode<Job> to be removed
+		Listnode<Job> curr = this.head;    
 		for(int i = 0;i < pos-1;i++) {
 			curr = curr.getNext();
 		}
-		if (pos == 0)
-		{
-			removed = curr.getData();
-			head = curr.getNext();
-		}
-		else
-		{
-			removed = curr.getNext().getData();    //Get the target Job from the JobList
+		//Get the target Job from the JobList
+		Job removed = curr.getNext().getData();    
 			
-			curr.setNext(curr.getNext().getNext());    //remove the target Job
-		}
-		size--;    //reduce the size
+		//remove the target Job
+		curr.setNext(curr.getNext().getNext());  
+		
+		//reduce the size
+		this.size--;    
 		return removed;
 	}
 
 	/**
-	 * 
+	 * returns the size of JobList
 	 */
 	@Override
-	public int size() {    //returns the size of JobList
-		return size;
+	public int size() {    
+		return this.size;
 	}
 
 	/**
-	 * 
+	 * required by java.util.Iterator, returns a iterator
 	 */
 	//@SuppressWarnings("unchecked")
 	@Override
-	public java.util.Iterator<Job> iterator() {    //required by java.util.Iterator, returns a iterator
-		return (java.util.Iterator<Job>) new JobListIterator(this);    
+	public java.util.Iterator<Job> iterator() {    
+		return (java.util.Iterator<Job>) new JobListIterator(this.head);    
 	}
 
 }
