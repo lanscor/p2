@@ -17,7 +17,7 @@
  * Runs the game through a loop (start) and initializes the application as well
  * as the other classes to work together. 
  *
- * <p>Bugs: None found so far. 
+ * <p>Bugs: None known. 
  *
  */
 
@@ -59,22 +59,14 @@ public class GameApp{
     	String 
     		upSeed,       //Unparsed versions of their int form
     		upTimeToPlay; //Unparsed versions of their int form. 
-    	String[]
-    		split = new String[args.length];
     	//Variables
     	
     	//Body
         System.out.println("Welcome to the Job Market!");
 
-        //Get commandLine arguments. 
-        for (int i = 0; i < args.length; i++)
-        {
-        	split[i] = (String) args[i]; //First line of args. 
-        }
-        
-        //The first is the seed, the second is the time to play. 
-        upSeed = split[0];
-        upTimeToPlay = split[1];
+        //The first is the seed, the second is the time to play.
+        upSeed = args[0];
+        upTimeToPlay = args[1];
         
         //Check to see if they are both good. 
         seed = checkArgs(upSeed);
