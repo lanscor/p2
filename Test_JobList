@@ -1,3 +1,4 @@
+import java.util.Iterator;
 /**
  * File to test the functionality of all methods involving
  * the JobList class and the JobListIterator class.
@@ -31,12 +32,12 @@ public class Test_JobList
 		
 		// Test add(pos, item) method, get method and size method
 		Job item2 = new Job("Setfire", 9, 5);
-		j.add(0, item2);
+		j.add(1, item2);
 		Job item3 = new Job("GingerRoot", 9, 15);
-		j.add(1, item3);
-		System.out.println(j.get(0).getJobName());
-		System.out.println("Expected output: Setfire");
+		j.add(2, item3);
 		System.out.println(j.get(1).getJobName());
+		System.out.println("Expected output: Setfire");
+		System.out.println(j.get(2).getJobName());
 		System.out.println("Expected output: GingerRoot");
 		System.out.println(j.size());
 		System.out.println("Expected output: 3");
@@ -53,11 +54,11 @@ public class Test_JobList
 		System.out.println("Expected output: false");
 		
 		// Test iterator constructor
-	    JobListIterator iterator = new JobListIterator(j);
+	     Iterator<Job> iterator = j.iterator();
 	    
 	    // Test iterator's next(), hasNext() methods
 	    System.out.println("\nExpected output:");
-	    for (int i = 0; i < j.size(); i++)
+	    for (int i = 1; i < j.size() + 1; i++)
 	    {
 	    	System.out.println(j.get(i).getJobName());
 	    }
@@ -71,7 +72,7 @@ public class Test_JobList
 	    System.out.println("\nActual output:");
 	    while (!j.isEmpty())
 	    {
-	    	System.out.println(j.remove(0).getJobName());
+	    	System.out.println(j.remove(1).getJobName());
 	    }
 	    System.out.println("\nExpected output:");
 	    System.out.println("Setfire");
