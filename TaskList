@@ -106,7 +106,7 @@ o Task 1: Assign Code Letters for each Team Member
   JobList can return an iterator and that the JobListIterator
   works as expected.
   
-+b Task 6: Write the Scoreboard class so that it implements all
++j Task 6: Write the Scoreboard class so that it implements all
   required operations of the ScoreboardADT. Review the Game class
   to see how the Scoreboard class is being used.
   
