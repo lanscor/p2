@@ -54,31 +54,33 @@ public class GameApp{
     {
     	//Variables
     	int 
-    		seed, 
-    		timeToPlay;
+    	seed, 
+    	timeToPlay;
     	String 
-    		upSeed,       //Unparsed versions of their int form
-    		upTimeToPlay; //Unparsed versions of their int form. 
+    	upSeed,       //Unparsed versions of their int form
+    	upTimeToPlay; //Unparsed versions of their int form. 
     	//Variables
-    	
-    	//Body
-        System.out.println("Welcome to the Job Market!");
 
-        //The first is the seed, the second is the time to play.
-        upSeed = args[0];
-        upTimeToPlay = args[1];
-        
-        //Check to see if they are both good. 
-        seed = checkArgs(upSeed);
-        timeToPlay = checkArgs(upTimeToPlay);
-         
-        //Create the new object. 
-        GameApp app = new GameApp(seed, timeToPlay);
-        while(app.game.getTimeToPlay() > 0)
-        {
-        	app.start();
-       	}
-        //Body
+    	//Body
+    	System.out.println("Welcome to the Job Market!");
+
+    	//The first is the seed, the second is the time to play.
+    	upSeed = args[0];
+    	upTimeToPlay = args[1];
+
+    	//Check to see if they are both good. 
+    	seed = checkArgs(upSeed);
+    	timeToPlay = checkArgs(upTimeToPlay);
+
+    	//Create the new object. 
+    	GameApp app = new GameApp(seed, timeToPlay);
+    	while(app.game.getTimeToPlay() > 0)
+    	{
+    		app.start();
+    	}
+    	System.out.println("Game Over!");
+		System.out.println("Your final score: " + app.game.getTotalScore());
+    	//Body
     }
 
     /**
@@ -86,86 +88,95 @@ public class GameApp{
      */
     private void start()
     {	
-    	//Variables
-    	int
+    	try
+    	{
+    		//Variables
+    		int
     		jobIndex, //the index of the job wanted to be worked on.
     		jobTime; //The amount of time for the given job. 
-    	final String
+    		final String
     		indexPrompt = "Select a job to work on: ",
     		timePrompt = "For how long would you like to work on this job?: ",
     		reentryPrompt = "At what position would you like to insert the "
     				+ "job back into the list?";
-    	//Variables
-    	
-    	//Body
-    	// Display time remaining in game
-    	int timeToPlay = this.game.getTimeToPlay();
-    	System.out.println("You have " + timeToPlay + " left in the game!");
-    	
-    	//Create new jobs on first iteration
-    	if (firstPass)
-    	{
-    		this.game.createJobs();
-    		firstPass = false;
-    	}
-    	
-    	//Display jobs w/Game Object. 
-    	this.game.displayActiveJobs();
-    	
-    	//Ask for user input of what job they want to perform
-    	jobIndex = getIntegerInput(indexPrompt);
-    	
+    		//Variables
+
+    		//Body
+    		// Display time remaining in game
+    		int timeToPlay = this.game.getTimeToPlay();
+    		System.out.println("You have " + timeToPlay + " left in the game!");
+
+    		//Create new jobs on first iteration
+    		if (firstPass)
+    		{
+    			this.game.createJobs();
+    			firstPass = false;
+    		}
+
+    		//Display jobs w/Game Object. 
+    		this.game.displayActiveJobs();
+
+    		//Ask for user input of what job they want to perform
+    		jobIndex = getIntegerInput(indexPrompt);
+
+    		// Check validity of input
+    		if (jobIndex < 0 || jobIndex > this.game.getNumberOfJobs() - 1)
+    		{
+    			throw new IndexOutOfBoundsException();
+    		}
+
     		//Deduct time if not at index 0. 
     		if (jobIndex != 0)
     		{
     			int deducted = timeToPlay - jobIndex;
     			this.game.setTimeToPlay(deducted);
     		}
-    	
-    	//Ask for user input of how long they want to work that job
-    	jobTime = getIntegerInput(timePrompt);
-    	
-    	//Get job and attempt to work for that long (w/ error checking)
-    	Job currJob = this.game.updateJob(jobIndex, jobTime);
-    	
-    	//If job isn't completed...
-    	if (!currJob.isCompleted())
-    	{
-    		//Ask for new index
-    		jobIndex = checkIndex(reentryPrompt);
-    		//Determine and deduct the time penalty accrued.
-    		int timePenalty;
-    		if (jobIndex == -1 || jobIndex > this.game.getNumberOfJobs() - 1)
+
+    		//Ask for user input of how long they want to work that job
+    		jobTime = getIntegerInput(timePrompt);
+
+    		//Get job and attempt to work for that long (w/ error checking)
+
+    		Job currJob = this.game.updateJob(jobIndex, jobTime);
+
+    		//If job isn't completed...
+    		if (!currJob.isCompleted())
     		{
-    			timePenalty = this.game.getNumberOfJobs();
+    			//Ask for new index
+    			jobIndex = checkIndex(reentryPrompt);
+
+    			//Determine and deduct the time penalty accrued.
+    			int timePenalty;
+    			if (jobIndex == -1 || jobIndex > this.game.getNumberOfJobs() - 1)
+    			{
+    				timePenalty = this.game.getNumberOfJobs();
+    			}
+    			else
+    			{
+    				timePenalty = jobIndex;
+    			}
+    			this.game.setTimeToPlay(this.game.getTimeToPlay() - timePenalty);
+
+    			//Insert at specified index. 
+    			this.game.addJob(jobIndex, currJob);
     		}
+
+
+    		//If the job is completed...
     		else
     		{
-    			timePenalty = jobIndex;
+    			//Display success message
+    			System.out.println("Job completed! Current Score: " + 
+    					this.game.getTotalScore());
+    			this.game.displayCompletedJobs();
     		}
-    		this.game.setTimeToPlay(this.game.getTimeToPlay() - timePenalty);
-    		
-    		//Insert at specified index. 
-    		this.game.addJob(jobIndex, currJob);
+    		//Body
     	}
-    	
-    	
-    	//If the job is completed...
-    	else
+    	catch (Exception e)
     	{
-    		//Display success message
-    		System.out.println("Job completed! Current Score: " + 
-    				this.game.getTotalScore());
-    		this.game.displayCompletedJobs();
+    		System.out.println("ERROR: Invalid input. Try again.");
+    		return;
     	}
-    	//AT END OF GAME display final message with score. 
-    	if (this.game.getTimeToPlay() <= 0)
-    	{
-    		System.out.println("Game Over!");
-    		System.out.println("Your final score: " + 
-    				this.game.getTotalScore());
-    	}
-    	//Body
     }
 
     /**
@@ -180,7 +191,7 @@ public class GameApp{
     	
         System.out.print(prompt);
         while ( ! STDIN.hasNextInt() ) {
-            System.out.print(STDIN.next()+" is not an int.  Please enter an integer.");
+            System.out.println(STDIN.next()+" is not an int.  Please enter an integer.");
         }
         return STDIN.nextInt();
     }
